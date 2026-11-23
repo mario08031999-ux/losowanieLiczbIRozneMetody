@@ -100,17 +100,126 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
                         int ilosc = Integer.parseInt(ileLiczb.getText().toString().trim());
+                        wynik.setText("");
 
                         double mediana = 0;
-                        if (tablica.length != 0){
-                            Arrays.sort(tablica);
-                            if (ilosc % 2 == 0) {
-                                mediana = (tablica[ilosc / 2 - 1] + tablica[ilosc / 2]) / 2.0;
-                            } else {
-                                mediana = tablica[ilosc / 2];
-                            }
+                        Arrays.sort(tablica);
+                        if (ilosc % 2 == 0) {
+                            mediana = (tablica[ilosc / 2 - 1] + tablica[ilosc / 2]) / 2.0;
+                        } else {
+                            mediana = tablica[ilosc / 2];
                         }
                         wynik.setText(mediana + "");
+
+                    }
+                }
+        );
+
+        dominanta.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (tablica == null || tablica.length == 0) {
+                            return;
+                        }
+                        int ilosc = Integer.parseInt(ileLiczb.getText().toString().trim());
+                        wynik.setText("");
+
+                        Arrays.sort((tablica));
+
+                        int maksWystapien = 1;
+                        int minWystapien = tablica.length;
+                        int aktualnyLicznik = 1;
+                        int unikalneElementy = 1;
+
+                        for (int i = 1; i < tablica.length; i++) {
+                            if (tablica[i] == tablica[i - 1]) {
+                                aktualnyLicznik++;
+                            } else {
+                                if (aktualnyLicznik > maksWystapien) maksWystapien = aktualnyLicznik;
+                                if (aktualnyLicznik < minWystapien) minWystapien = aktualnyLicznik;
+                                aktualnyLicznik = 1;
+                                unikalneElementy++;
+                            }
+                        }
+                        if (aktualnyLicznik > maksWystapien) maksWystapien = aktualnyLicznik;
+                        if (aktualnyLicznik < minWystapien) minWystapien = aktualnyLicznik;
+
+                        if (maksWystapien == minWystapien && unikalneElementy > 1) {
+                            wynik.setText("Brak dominanty.");
+                            return;
+                        }
+
+                        String wynikStr = "Dominanta: ";
+                        aktualnyLicznik = 1;
+
+                        for (int i = 1; i < tablica.length; i++) {
+                            if (tablica[i] == tablica[i - 1]) {
+                                aktualnyLicznik++;
+                            } else {
+                                if (aktualnyLicznik == maksWystapien) {
+                                    wynikStr += tablica[i - 1] + " "; // += zamiast =
+                                }
+                                aktualnyLicznik = 1;
+                            }
+                        }
+
+                        if (aktualnyLicznik == maksWystapien) {
+                            wynikStr += tablica[tablica.length - 1];
+                        }
+
+                        wynik.setText(wynikStr);
+                    }
+                }
+        );
+
+        suma.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (tablica == null || tablica.length == 0) {
+                            return;
+                        }
+                        int ilosc = Integer.parseInt(ileLiczb.getText().toString().trim());
+                        wynik.setText("");
+
+                        int sumaLiczb = 0;
+                        for (int i = 0; i < tablica.length; i++) {
+                            sumaLiczb += tablica[i];
+                        }
+                        wynik.setText(sumaLiczb + "");
+                    }
+                }
+        );
+
+        maxymalna.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int maks = 0;
+                        Arrays.sort(tablica);
+                        maks = tablica[tablica.length-1];
+                        wynik.setText(maks + "");
+                    }
+                }
+        );
+
+        minimalna.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int mini = 0;
+                        Arrays.sort(tablica);
+                        mini = tablica[0];
+                        wynik.setText(mini + "");
+                    }
+                }
+        );
+
+        srednia.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
                     }
                 }
