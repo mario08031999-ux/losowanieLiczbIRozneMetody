@@ -24,21 +24,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:hint="Podaj liczbe Wartosci"/>
 
             <EditText
                 android:id="@+id/odJakiejLiczby"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:hint="Podaj minimalna wartosc"/>
 
             <EditText
                 android:id="@+id/doJakiejLiczby"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:hint="Podaj maksymalna wartosc"/>
         </LinearLayout>
 
         <Button
@@ -51,6 +54,7 @@
     </LinearLayout>
 
     <ListView
+        android:id="@+id/wyswietlanie"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
