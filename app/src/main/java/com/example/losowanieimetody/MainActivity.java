@@ -220,7 +220,12 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        int sumaLiczb = 0;
+                        for (int i = 0; i < tablica.length; i++) {
+                            sumaLiczb += tablica[i];
+                        }
+                        int srednialiczb = sumaLiczb/2;
+                        wynik.setText(srednialiczb + "");
                     }
                 }
         );
