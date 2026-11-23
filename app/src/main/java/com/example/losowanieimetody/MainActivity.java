@@ -14,8 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.viewmodel.CreationExtras;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,18 +48,22 @@ public class MainActivity extends AppCompatActivity {
         wynik = findViewById(R.id.textView);
         listView = findViewById(R.id.wyswietlanie);
 
+
+
         losuj.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String liczbaLiczbStr = ileLiczb.getText().toString().trim();
-                        String aStr = odJakiej.getText().toString().trim();
-                        String bStr = doJakiej.getText().toString().trim();
 
 
-                        int ilosc = Integer.parseInt(liczbaLiczbStr);
-                        int min = Integer.parseInt(aStr);
-                        int max = Integer.parseInt(bStr);
+                        int ilosc = Integer.parseInt(ileLiczb.getText().toString().trim());
+                        int min = Integer.parseInt(odJakiej.getText().toString().trim());
+                        int max = Integer.parseInt(doJakiej.getText().toString().trim());
+
+                        if (ilosc <= 0) {
+                            Toast.makeText(MainActivity.this, "Podaj ilość większą od 0!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
                         if (min > max) {
                             Toast.makeText(MainActivity.this, "Wartość OD nie może być większa niż DO!", Toast.LENGTH_SHORT).show();
@@ -69,14 +75,43 @@ public class MainActivity extends AppCompatActivity {
                         Random random = new Random();
 
                         for (int i = 0; i < ilosc; i++) {
-                            int wylosowana = random.nextInt((max - min) + 1) + min;
+                            int wylosowana = random.nextInt(max - min + 1) + min;
                             tablica[i] = wylosowana;
                             listaDoWyswietlenia.add(wylosowana);
                         }
 
-                        ArrayAdapter adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, listaDoWyswietlenia);
+                        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(
+                                MainActivity.this,
+                                android.R.layout.simple_list_item_1,
+                                listaDoWyswietlenia
+                        );
+
                         listView.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
+                    }
+                }
+        );
+
+        mediana.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (tablica == null || tablica.length == 0) {
+                            return;
+                        }
+                        int ilosc = Integer.parseInt(ileLiczb.getText().toString().trim());
+
+                        double mediana = 0;
+                        if (tablica.length != 0){
+                            Arrays.sort(tablica);
+                            if (ilosc % 2 == 0) {
+                                mediana = (tablica[ilosc / 2 - 1] + tablica[ilosc / 2]) / 2.0;
+                            } else {
+                                mediana = tablica[ilosc / 2];
+                            }
+                        }
+                        wynik.setText(mediana + "");
+
                     }
                 }
         );
